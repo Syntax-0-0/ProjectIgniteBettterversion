@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="MainMenuContainer" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Textures/cutting_BG.png?fileID=2800000&amp;guid=3fed1af2cde1db546a69b6d6826acfe2&amp;type=3#cutting_BG&quot;);">
+        <ui:Label text="Morning" name="menuLogo" style="-unity-text-align: middle-left; align-items: stretch; align-self: center; font-size: 100px; -unity-font-style: italic;" />
+        <ui:Button text="Start Game" name="StartGame" style="min-width: auto; left: auto; right: auto; white-space: nowrap; -unity-text-align: middle-center; font-size: 52px; top: 20%;" />
+        <ui:Button text="Quit Game" name="QuitGame" style="top: 40%; font-size: 50px;" />
+    </ui:VisualElement>
+</ui:UXML>
