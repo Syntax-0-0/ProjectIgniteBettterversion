@@ -1,39 +1,76 @@
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InteractableSurface : MonoBehaviour
 {
+    InputAction mousePos;
     InputAction interact;
-    InputAction Exit;
-    public GameObject mainCamera;
-    public GameObject switchToCamera;
+    public GameObject interactText;
+    public GameObject interactSurface;
+    public Camera mainCamera;
+    public float interactSize;
+    public string switchToScene;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         interact = InputSystem.actions.FindAction("Interact");
-        Exit = InputSystem.actions.FindAction("Exit");
+        mousePos = InputSystem.actions.FindAction("Look");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (interact.IsPressed())
+        {
+            Debug.Log("clicked");
+            Vector2 location = mousePos.ReadValue<Vector2>();
+            Vector3 location3 = new Vector3(location.x, location.y,0);
+            Vector3 interactSurfacePos = mainCamera.WorldToScreenPoint(interactSurface.transform.position);
+            interactSurfacePos.z = 0;
+            if ((location3- interactSurfacePos).magnitude < interactSize)
+            {
+                SceneManager.LoadScene(switchToScene, LoadSceneMode.Single);
+            }
+            Debug.Log((location3- interactSurfacePos).magnitude);
+            Debug.Log("interactSurface" + interactSurfacePos);
+            Debug.Log("location3" + location3);
+        }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
+    {
+       // Debug.Log("omgwow");
+        if (other.CompareTag("Player"))
+        {
+            //Debug.Log(other);
+            interactText.SetActive(true);
+            interactSurface.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
     {
         Debug.Log(other);
-        if (interact.IsPressed() && other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            mainCamera.SetActive(false);
-            switchToCamera.SetActive(true);
-            other.GetComponent<PlayerMovement>().movementSpeed = 0;
+            //Debug.Log(other);
+            interactText.SetActive(false);
+            interactSurface.SetActive(false);
         }
-        if (Exit.IsPressed() && other.CompareTag("Player"))
+    }
+    public void OnInteract(InputAction input)
+    {
+        Debug.Log("clicked");
+        Vector2 location = mousePos.ReadValue<Vector2>();
+        Vector3 location3 = new Vector3 (location.x,0,location.y);
+        Vector3 interactSurfacePos = mainCamera.WorldToScreenPoint(interactSurface.transform.position);
+        interactSurfacePos.y = 0;
+        if ((location3- interactSurfacePos).magnitude < interactSize)
         {
-            mainCamera.SetActive(true);
-            switchToCamera.SetActive(false);
-            other.GetComponent<PlayerMovement>().movementSpeed = 0.05f;
+            SceneManager.LoadScene(switchToScene, LoadSceneMode.Single);
         }
     }
 }
