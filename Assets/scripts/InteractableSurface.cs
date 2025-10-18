@@ -23,7 +23,7 @@ public class InteractableSurface : MonoBehaviour
     void Update()
     {
 
-        if (interact.IsPressed())
+        if (interact.WasPressedThisFrame())
         {
             Debug.Log("clicked");
             Vector2 location = mousePos.ReadValue<Vector2>();
