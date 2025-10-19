@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 mousePosition = mainCamera.ScreenToWorldPoint(new Vector3(movePoint.x, movePoint.y, 0));
         //characterController.transform.position = new Vector3(mousePosition.x,1,mousePosition.z);
-        if ((mousePosition-characterController.transform.position).magnitude > 1f)
+        if ((mousePosition-characterController.transform.position).magnitude > 1f && movePoint != Vector2.zero)
         {
             Vector3 moveDirection = new Vector3((mousePosition-characterController.transform.position).x, 0, (mousePosition-characterController.transform.position).z);
             moveDirection = Vector3.ClampMagnitude(moveDirection, 1f);
