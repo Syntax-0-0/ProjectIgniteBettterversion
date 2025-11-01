@@ -9,6 +9,7 @@ TagManager:
   - interactSurface
   - Knife
   - holster
+  - gameManager
   layers:
   - Default
   - TransparentFX
